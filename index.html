@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MY BRAIN.exe — The Shrine</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Mono:wght@400;700&family=Permanent+Marker&family=Rubik+Dirt&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFE000;
+    --red: #FF2D2D;
+    --green: #00FF88;
+    --blue: #00CFFF;
+    --purple: #C850FF;
+    --dark: #0a0a0a;
+    --card: #141414;
+    --border: #2a2a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E💀%3C/text%3E%3C/svg%3E") 16 16, auto;
+  }
+
+  /* SCANLINES overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: radial-gradient(ellipse at 20% 50%, #1a0030 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, #001a2c 0%, transparent 60%),
+                var(--dark);
+    border-bottom: 3px solid var(--yellow);
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .hero-noise {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .floating-emojis span {
+    position: absolute;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    animation: floatUp linear infinite;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+  .floating-emojis span:nth-child(1)  { left: 5%;  animation-duration: 8s;  animation-delay: 0s; }
+  .floating-emojis span:nth-child(2)  { left: 15%; animation-duration: 11s; animation-delay: 2s; }
+  .floating-emojis span:nth-child(3)  { left: 25%; animation-duration: 7s;  animation-delay: 4s; }
+  .floating-emojis span:nth-child(4)  { left: 40%; animation-duration: 9s;  animation-delay: 1s; }
+  .floating-emojis span:nth-child(5)  { left: 55%; animation-duration: 12s; animation-delay: 3s; }
+  .floating-emojis span:nth-child(6)  { left: 70%; animation-duration: 6s;  animation-delay: 0.5s; }
+  .floating-emojis span:nth-child(7)  { left: 82%; animation-duration: 10s; animation-delay: 5s; }
+  .floating-emojis span:nth-child(8)  { left: 92%; animation-duration: 8.5s; animation-delay: 2.5s; }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.15; }
+    90%  { opacity: 0.15; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  .hero-badge {
+    background: var(--yellow);
+    color: var(--dark);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    transform: rotate(-1deg);
+  }
+
+  .hero h1 {
+    font-family: 'Rubik Dirt', cursive;
+    font-size: clamp(3.5rem, 12vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 .line1 { color: var(--yellow); display: block; }
+  .hero h1 .line2 { color: #fff; display: block; }
+  .hero h1 .line3 { 
+    color: transparent; 
+    -webkit-text-stroke: 2px var(--red);
+    display: block; 
+    animation: glitch 4s infinite;
+  }
+
+  @keyframes glitch {
+    0%, 90%, 100% { transform: none; text-shadow: none; }
+    92% { transform: translateX(-3px); text-shadow: 3px 0 var(--blue); }
+    94% { transform: translateX(3px); text-shadow: -3px 0 var(--red); }
+    96% { transform: translateX(-1px); }
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: #666;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-top: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+  .nav-pills a {
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem;
+    border: 2px solid;
+    transition: all 0.15s;
+    cursor: inherit;
+  }
+
+  /* ===== DELETE BUTTON ===== */
+  .delete-btn {
+    background: transparent;
+    border: none;
+    color: #444;
+    font-size: 0.85rem;
+    cursor: inherit;
+    margin-left: auto;
+    padding: 0 0.3rem;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color 0.15s, transform 0.15s;
+  }
+  .delete-btn:hover { color: var(--red); transform: scale(1.3); }
+  .nav-pills a:hover { transform: translate(-2px, -2px); }
+  .p1 { border-color: var(--yellow); color: var(--yellow); }
+  .p1:hover { background: var(--yellow); color: var(--dark); box-shadow: 4px 4px 0 #9f8d00; }
+  .p2 { border-color: var(--red); color: var(--red); }
+  .p2:hover { background: var(--red); color: #fff; box-shadow: 4px 4px 0 #900; }
+  .p3 { border-color: var(--green); color: var(--green); }
+  .p3:hover { background: var(--green); color: var(--dark); box-shadow: 4px 4px 0 #007a40; }
+  .p4 { border-color: var(--blue); color: var(--blue); }
+  .p4:hover { background: var(--blue); color: var(--dark); box-shadow: 4px 4px 0 #007a99; }
+  .p5 { border-color: var(--purple); color: var(--purple); }
+  .p5:hover { background: var(--purple); color: #fff; box-shadow: 4px 4px 0 #7a00cc; }
+  .p6 { border-color: #fff; color: #fff; }
+  .p6:hover { background: #fff; color: var(--dark); box-shadow: 4px 4px 0 #666; }
+  .p7 { border-color: #ff8800; color: #ff8800; }
+  .p7:hover { background: #ff8800; color: var(--dark); box-shadow: 4px 4px 0 #885000; }
+  .p8 { border-color: #ff66cc; color: #ff66cc; }
+  .p8:hover { background: #ff66cc; color: var(--dark); box-shadow: 4px 4px 0 #993377; }
+
+  /* ===== SECTIONS ===== */
+  section {
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 3rem;
+  }
+
+  .divider {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--yellow), transparent);
+    margin: 0;
+  }
+
+  /* ===== MEME ERAS ===== */
+  #eras { background: var(--dark); }
+
+  .eras-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .era-card {
+    border: 2px solid var(--border);
+    background: var(--card);
+    padding: 1.5rem;
+    position: relative;
+    transition: all 0.2s;
+    cursor: inherit;
+  }
+  .era-card:hover {
+    border-color: var(--yellow);
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--yellow);
+  }
+  .era-card .era-year {
+    font-family: 'Bangers', cursive;
+    font-size: 3rem;
+    color: var(--yellow);
+    opacity: 0.2;
+    position: absolute;
+    top: 0.5rem; right: 1rem;
+  }
+  .era-card h3 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .era-card p { font-size: 0.75rem; color: #888; line-height: 1.7; }
+  .era-tag {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.6rem;
+    background: #222;
+    border: 1px solid #333;
+    color: #aaa;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .add-meme-btn {
+    margin-top: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 2px solid var(--yellow);
+    color: var(--yellow);
+    padding: 0.75rem 1.5rem;
+    cursor: inherit;
+    transition: all 0.15s;
+  }
+  .add-meme-btn:hover {
+    background: var(--yellow);
+    color: var(--dark);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 #9f8d00;
+  }
+
+  /* ===== HOT TAKES ===== */
+  #hot-takes {
+    background: linear-gradient(180deg, var(--dark) 0%, #150000 100%);
+  }
+
+  .hot-takes-list { display: flex; flex-direction: column; gap: 1rem; }
+
+  .take-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    border-left: 4px solid var(--red);
+    padding: 1.2rem 1.5rem;
+    background: rgba(255,45,45,0.05);
+    transition: all 0.2s;
+    cursor: inherit;
+    position: relative;
+  }
+  .take-item:hover { background: rgba(255,45,45,0.1); transform: translateX(5px); }
+  .take-number {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    color: var(--red);
+    opacity: 0.4;
+    min-width: 2.5rem;
+  }
+  .take-text { font-size: 0.9rem; line-height: 1.7; }
+  .take-heat {
+    margin-left: auto;
+    font-size: 1.2rem;
+    white-space: nowrap;
+  }
+
+  .add-take-form {
+    margin-top: 2rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .add-take-form input {
+    flex: 1;
+    min-width: 200px;
+    background: #111;
+    border: 2px solid #333;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .add-take-form input:focus { border-color: var(--red); }
+  .add-take-form input::placeholder { color: #555; }
+  .add-take-form button {
+    background: var(--red);
+    color: #fff;
+    border: 2px solid var(--red);
+    padding: 0.75rem 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: inherit;
+    transition: all 0.15s;
+  }
+  .add-take-form button:hover { background: transparent; color: var(--red); transform: translate(-2px,-2px); box-shadow: 3px 3px 0 #900; }
+
+  /* ===== CANNOT EXPLAIN ===== */
+  #unexplained {
+    background: linear-gradient(180deg, #150000 0%, #000d1a 100%);
+  }
+  .explain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .explain-card {
+    border: 1px solid #1a2a3a;
+    background: rgba(0, 207, 255, 0.04);
+    padding: 1.5rem;
+    position: relative;
+    transition: all 0.2s;
+    cursor: inherit;
+  }
+  .explain-card:hover {
+    border-color: var(--blue);
+    box-shadow: 0 0 20px rgba(0,207,255,0.15);
+  }
+  .explain-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .explain-card h3 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--blue);
+  }
+  .explain-card p { font-size: 0.75rem; color: #778; line-height: 1.7; }
+  .explain-add {
+    margin-top: 2rem;
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+  }
+  .explain-add input {
+    flex: 1; min-width: 200px;
+    background: #05131f; border: 2px solid #1a2a3a;
+    color: #fff; padding: 0.75rem 1rem;
+    font-family: 'Space Mono', monospace; font-size: 0.8rem; outline: none;
+    transition: border-color 0.2s;
+  }
+  .explain-add input:focus { border-color: var(--blue); }
+  .explain-add input::placeholder { color: #445; }
+  .explain-add button {
+    background: var(--blue); color: var(--dark); border: 2px solid var(--blue);
+    padding: 0.75rem 1.5rem; font-family: 'Space Mono', monospace; font-size: 0.75rem;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; cursor: inherit;
+    transition: all 0.15s;
+  }
+  .explain-add button:hover { background: transparent; color: var(--blue); transform: translate(-2px,-2px); box-shadow: 3px 3px 0 #007aaa; }
+
+  /* ===== QUOTE GENERATOR ===== */
+  #quotes {
+    background: linear-gradient(180deg, #000d1a 0%, #0a001a 100%);
+    text-align: center;
+  }
+  .quote-box {
+    max-width: 700px;
+    margin: 0 auto;
+    border: 2px solid var(--purple);
+    padding: 3rem 2.5rem;
+    position: relative;
+    background: rgba(200,80,255,0.05);
+  }
+  .quote-box::before, .quote-box::after {
+    content: ''; position: absolute;
+    width: 20px; height: 20px;
+    background: var(--purple);
+  }
+  .quote-box::before { top: -2px; left: -2px; }
+  .quote-box::after { bottom: -2px; right: -2px; }
+
+  .quote-text {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    line-height: 1.5;
+    color: #fff;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+  }
+  .quote-source {
+    margin-top: 1.5rem;
+    font-size: 0.7rem;
+    color: #666;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .quote-gen-btn {
+    margin-top: 2rem;
+    background: var(--purple);
+    color: #fff; border: none;
+    padding: 1rem 2.5rem;
+    font-family: 'Bangers', cursive; font-size: 1.4rem; letter-spacing: 0.1em;
+    cursor: inherit; transition: all 0.15s;
+  }
+  .quote-gen-btn:hover { transform: scale(1.05) rotate(-1deg); box-shadow: 0 0 30px rgba(200,80,255,0.5); }
+
+  /* ===== SPIN WHEEL ===== */
+  #wheel {
+    background: linear-gradient(180deg, #0a001a 0%, #001a0a 100%);
+    text-align: center;
+  }
+  .wheel-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .wheel-container {
+    position: relative;
+    width: 320px;
+    height: 320px;
+  }
+  .wheel-pointer {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    font-size: 2rem;
+    filter: drop-shadow(0 0 10px var(--green));
+  }
+  #spinCanvas {
+    border-radius: 50%;
+    border: 4px solid var(--green);
+    box-shadow: 0 0 40px rgba(0,255,136,0.3);
+    transition: transform 0s;
+  }
+  .spin-btn {
+    background: var(--green);
+    color: var(--dark);
+    border: none;
+    padding: 1rem 3rem;
+    font-family: 'Bangers', cursive;
+    font-size: 1.8rem;
+    letter-spacing: 0.1em;
+    cursor: inherit;
+    transition: all 0.2s;
+  }
+  .spin-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0,255,136,0.5); }
+  .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .wheel-result {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.3rem;
+    min-height: 2.5rem;
+    color: var(--green);
+    max-width: 500px;
+    line-height: 1.5;
+  }
+
+  /* ===== VILLAIN ARC ===== */
+  #villain {
+    background: linear-gradient(180deg, #001a0a 0%, #1a0500 100%);
+  }
+  .villain-timeline { position: relative; padding-left: 2rem; }
+  .villain-timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--red), var(--purple), var(--red));
+  }
+  .villain-entry {
+    position: relative;
+    margin-bottom: 2rem;
+    padding: 1.2rem 1.5rem;
+    background: rgba(255,45,45,0.05);
+    border: 1px solid #2a1010;
+    transition: all 0.2s;
+    cursor: inherit;
+  }
+  .villain-entry:hover { border-color: var(--red); background: rgba(255,45,45,0.1); }
+  .villain-entry::before {
+    content: '😈';
+    position: absolute;
+    left: -2.2rem;
+    top: 1rem;
+    font-size: 1rem;
+    background: var(--dark);
+    padding: 0 2px;
+  }
+  .villain-entry .v-date { font-size: 0.65rem; color: #666; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .villain-entry h3 { font-family: 'Permanent Marker', cursive; font-size: 1.1rem; color: var(--red); margin-bottom: 0.3rem; }
+  .villain-entry p { font-size: 0.78rem; color: #888; line-height: 1.6; }
+
+  .villain-add { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.75rem; max-width: 600px; }
+  .villain-add input, .villain-add textarea {
+    background: #110500; border: 2px solid #2a1010; color: #fff;
+    padding: 0.75rem 1rem; font-family: 'Space Mono', monospace; font-size: 0.8rem;
+    outline: none; transition: border-color 0.2s; resize: vertical;
+  }
+  .villain-add input:focus, .villain-add textarea:focus { border-color: var(--red); }
+  .villain-add input::placeholder, .villain-add textarea::placeholder { color: #554; }
+  .villain-add button {
+    background: var(--red); color: #fff; border: 2px solid var(--red);
+    padding: 0.75rem 1.5rem; font-family: 'Space Mono', monospace; font-size: 0.75rem;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    cursor: inherit; transition: all 0.15s; align-self: flex-start;
+  }
+  .villain-add button:hover { background: transparent; color: var(--red); transform: translate(-2px,-2px); box-shadow: 3px 3px 0 #900; }
+
+  /* ===== W/L BOARD ===== */
+  #wl {
+    background: linear-gradient(180deg, #1a0500 0%, #0a0a0a 100%);
+  }
+  .wl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  @media(max-width: 600px) { .wl-grid { grid-template-columns: 1fr; } }
+
+  .wl-col h3 {
+    font-family: 'Bangers', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .w-col h3 { color: var(--green); }
+  .l-col h3 { color: var(--red); }
+
+  .wl-item {
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    border: 1px solid;
+    transition: all 0.2s;
+    cursor: inherit;
+  }
+  .w-item { border-color: #103020; background: rgba(0,255,136,0.04); }
+  .w-item:hover { border-color: var(--green); background: rgba(0,255,136,0.1); }
+  .l-item { border-color: #301010; background: rgba(255,45,45,0.04); }
+  .l-item:hover { border-color: var(--red); background: rgba(255,45,45,0.1); }
+
+  .wl-add { margin-top: 1.5rem; display: flex; gap: 0.5rem; }
+  .wl-add input {
+    flex: 1; background: #111; border: 2px solid #222; color: #fff;
+    padding: 0.65rem 0.9rem; font-family: 'Space Mono', monospace; font-size: 0.75rem;
+    outline: none; transition: border-color 0.2s;
+  }
+  .w-add input:focus { border-color: var(--green); }
+  .l-add input:focus { border-color: var(--red); }
+  .wl-add input::placeholder { color: #444; }
+  .w-add button { background: var(--green); color: var(--dark); border: 2px solid var(--green); padding: 0.65rem 1rem; font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 700; cursor: inherit; transition: all 0.15s; }
+  .l-add button { background: var(--red); color: #fff; border: 2px solid var(--red); padding: 0.65rem 1rem; font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 700; cursor: inherit; transition: all 0.15s; }
+  .w-add button:hover { transform: translate(-2px,-2px); box-shadow: 3px 3px 0 #007a40; }
+  .l-add button:hover { transform: translate(-2px,-2px); box-shadow: 3px 3px 0 #900; }
+
+  .score-bar {
+    margin-bottom: 2rem;
+    background: #111;
+    height: 8px;
+    position: relative;
+    border: 1px solid #222;
+  }
+  .score-fill-w {
+    height: 100%;
+    background: var(--green);
+    transition: width 0.5s ease;
+  }
+  .score-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: #555;
+    margin-top: 0.4rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* ===== NICHE MEMES ===== */
+  #niche {
+    background: linear-gradient(180deg, #0a0a0a 0%, #000510 100%);
+  }
+  .niche-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.2rem;
+  }
+  .niche-card {
+    border: 2px solid #ff880022;
+    background: rgba(255,136,0,0.04);
+    padding: 1.2rem;
+    position: relative;
+    transition: all 0.2s;
+    cursor: inherit;
+  }
+  .niche-card:hover { border-color: #ff8800; transform: translate(-2px,-2px); box-shadow: 4px 4px 0 #ff8800; }
+  .niche-rank {
+    font-family: 'Bangers', cursive;
+    font-size: 3.5rem;
+    color: #ff8800;
+    opacity: 0.15;
+    position: absolute;
+    top: 0; right: 0.8rem;
+    line-height: 1;
+  }
+  .niche-card h3 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.05rem;
+    color: #ff8800;
+    margin-bottom: 0.4rem;
+  }
+  .niche-card p { font-size: 0.72rem; color: #777; line-height: 1.6; }
+  .niche-absurdity {
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.65rem;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .absurdity-dots { display: flex; gap: 3px; }
+  .absurdity-dots span {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ff8800;
+  }
+  .absurdity-dots span.off { background: #222; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 3px solid var(--yellow);
+    padding: 3rem 2rem;
+    text-align: center;
+    background: var(--dark);
+  }
+  footer h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    color: var(--yellow);
+    letter-spacing: 0.1em;
+  }
+  footer p { font-size: 0.7rem; color: #444; margin-top: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ===== MEME PICTURE WALL ===== */
+  #memepics { background: linear-gradient(180deg, #0a0a0a 0%, #0a0010 100%); }
+
+  .meme-upload-zone {
+    border: 2px dashed #ff66cc44;
+    background: rgba(255,102,204,0.04);
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.2s;
+    margin-bottom: 2rem;
+    cursor: inherit;
+  }
+  .meme-upload-zone:hover { border-color: #ff66cc; background: rgba(255,102,204,0.09); }
+  .meme-upload-zone input[type=file] { display: none; }
+  .meme-upload-label {
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+    cursor: inherit;
+  }
+  .upload-icon { font-size: 2.5rem; }
+  .upload-hint { font-size: 0.72rem; color: #666; letter-spacing: 0.1em; text-transform: uppercase; }
+  .upload-cta {
+    display: inline-block;
+    margin-top: 0.5rem;
+    background: transparent;
+    border: 2px solid #ff66cc;
+    color: #ff66cc;
+    padding: 0.6rem 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: inherit;
+    transition: all 0.15s;
+  }
+  .upload-cta:hover { background: #ff66cc; color: var(--dark); transform: translate(-2px,-2px); box-shadow: 3px 3px 0 #993377; }
+
+  .meme-pics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .meme-pic-card {
+    border: 2px solid #ff66cc22;
+    background: #111;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s;
+    aspect-ratio: 1;
+  }
+  .meme-pic-card:hover { border-color: #ff66cc; transform: translate(-2px,-2px); box-shadow: 4px 4px 0 #ff66cc; }
+  .meme-pic-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .meme-pic-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.75);
+    padding: 0.4rem 0.6rem;
+    font-size: 0.65rem;
+    color: #ccc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .meme-pic-delete {
+    position: absolute; top: 0.4rem; right: 0.4rem;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid #ff2d2d88;
+    color: var(--red);
+    font-size: 0.8rem;
+    padding: 0.15rem 0.4rem;
+    cursor: inherit;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .meme-pic-card:hover .meme-pic-delete { opacity: 1; }
+  .meme-pic-delete:hover { background: var(--red); color: #fff; }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: var(--yellow); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-noise"></div>
+  <div class="floating-emojis">
+    <span>🤡</span><span>💀</span><span>🔥</span><span>😈</span>
+    <span>🧠</span><span>⚡</span><span>👁️</span><span>🗿</span>
+  </div>
+  <div class="hero-badge">est. in the trenches • classified document</div>
+  <h1>
+    <span class="line1">MY</span>
+    <span class="line2">BRAIN</span>
+    <span class="line3">.EXE</span>
+  </h1>
+  <p class="hero-sub">a shrine to chaos, memes & things i cannot explain</p>
+  <nav class="nav-pills">
+    <a href="#eras" class="p1">🗂 Meme Eras</a>
+    <a href="#hot-takes" class="p2">🔥 Hot Takes</a>
+    <a href="#unexplained" class="p4">🌀 Unexplained</a>
+    <a href="#quotes" class="p5">💬 Cursed Quotes</a>
+    <a href="#wheel" class="p3">🎡 Spin Wheel</a>
+    <a href="#villain" class="p6">😈 Villain Arc</a>
+    <a href="#wl" class="p7">📊 W/L Board</a>
+    <a href="#niche" class="p8">🏆 Niche Memes</a>
+    <a href="#memepics" class="p8" style="border-color:#ff66cc;color:#ff66cc;">🖼️ Meme Vault</a>
+  </nav>
+</div>
+
+<div class="divider"></div>
+
+<!-- MEME ERAS -->
+<section id="eras">
+  <p class="section-label">Chapter 01</p>
+  <h2 class="section-title" style="color: var(--yellow);">🗂 THE MEME ERAS</h2>
+  <div class="eras-grid" id="erasGrid">
+    <div class="era-card">
+      <span class="era-year">09</span>
+      <h3>The Pick-Me Era</h3>
+      <p>The change in my behavior said it all.</p>
+      <span class="era-tag">2017–2019</span>
+      <button class="delete-btn" onclick="this.closest('.era-card').remove()" title="Delete">✕</button>
+    </div>
+    <div class="era-card">
+      <span class="era-year">16</span>
+      <h3>The 'Jealousy-Jealousy' Era</h3>
+      <p>When I felt like things are falling apart but boom I find someone else having all the things that I wished to have.</p>
+      <span class="era-tag">2018–2019</span>
+      <button class="delete-btn" onclick="this.closest('.era-card').remove()" title="Delete">✕</button>
+    </div>
+    <div class="era-card">
+      <span class="era-year">19</span>
+      <h3>The Wattpad/AO3 Era</h3>
+      <p>I had to read wattpad sneakily when i was around 12 and 13 years old.</p>
+      <span class="era-tag">2017–2018</span>
+      <button class="delete-btn" onclick="this.closest('.era-card').remove()" title="Delete">✕</button>
+    </div>
+    <div class="era-card">
+      <span class="era-year">22</span>
+      <h3>The 'I need to win' Era</h3>
+      <p>Because my marks matter more than some human's emotions.</p>
+      <span class="era-tag">2022–Now</span>
+      <button class="delete-btn" onclick="this.closest('.era-card').remove()" title="Delete">✕</button>
+    </div>
+  </div>
+  <button class="add-meme-btn" onclick="addEra()">+ ADD YOUR ERA</button>
+</section>
+
+<div class="divider" style="background: linear-gradient(90deg, transparent, var(--red), transparent)"></div>
+
+<!-- HOT TAKES -->
+<section id="hot-takes">
+  <p class="section-label">Chapter 02</p>
+  <h2 class="section-title" style="color: var(--red);">🔥 HOT TAKES</h2>
+  <div class="hot-takes-list" id="takesList">
+    <div class="take-item">
+      <span class="take-number">01</span>
+      <span class="take-text">Cheating is a CHOICE.</span>
+      <span class="take-heat">🌶️🌶️🌶️🌶️🌶️</span>
+      <button class="delete-btn" onclick="this.closest('.take-item').remove()">✕</button>
+    </div>
+    <div class="take-item">
+      <span class="take-number">02</span>
+      <span class="take-text">Not every one can be girl's girl. Some are home-wreckers.</span>
+      <span class="take-heat">🌶️🌶️🌶️</span>
+      <button class="delete-btn" onclick="this.closest('.take-item').remove()">✕</button>
+    </div>
+    <div class="take-item">
+      <span class="take-number">03</span>
+      <span class="take-text">I am the most beautiful one.</span>
+      <span class="take-heat">🌶️🌶️🌶️🌶️</span>
+      <button class="delete-btn" onclick="this.closest('.take-item').remove()">✕</button>
+    </div>
+  </div>
+  <div class="add-take-form">
+    <input type="text" id="newTakeInput" placeholder="Drop your most unhinged opinion here..." />
+    <button onclick="addTake()">SUBMIT TAKE 🔥</button>
+  </div>
+</section>
+
+<div class="divider" style="background: linear-gradient(90deg, transparent, var(--blue), transparent)"></div>
+
+<!-- CANNOT EXPLAIN -->
+<section id="unexplained">
+  <p class="section-label">Chapter 03</p>
+  <h2 class="section-title" style="color: var(--blue);">🌀 THINGS I CANNOT EXPLAIN</h2>
+  <div class="explain-grid" id="explainGrid">
+    <div class="explain-card">
+      <div class="explain-icon">🌀</div>
+      <h3>The tarot Thing</h3>
+      <p>I did tarot once and the cards came out so abruptly and so unexpectedly and i put down my cards.</p>
+      <button class="delete-btn" onclick="this.closest('.explain-card').remove()" style="display:block;margin-top:0.5rem;">✕ remove</button>
+    </div>
+    <div class="explain-card">
+      <div class="explain-icon">👁️</div>
+      <h3>The "I Was Just Thinking That"</h3>
+      <p>Someone says something and I had the exact same thought 10 seconds before. Happening weekly now.</p>
+      <button class="delete-btn" onclick="this.closest('.explain-card').remove()" style="display:block;margin-top:0.5rem;">✕ remove</button>
+    </div>
+    <div class="explain-card">
+      <div class="explain-icon">📱</div>
+      <h3>The 'Are they spying' Thing</h3>
+      <p>I once said the word umbrella few times in conversation with my friend, but then i opened my phone and all socials sites showed me umbrellas.</p>
+      <button class="delete-btn" onclick="this.closest('.explain-card').remove()" style="display:block;margin-top:0.5rem;">✕ remove</button>
+    </div>
+    <div class="explain-card">
+      <div class="explain-icon">❓</div>
+      <h3>Add yours...</h3>
+      <p>What weird thing keeps happening to you that defies all logical explanation?</p>
+    </div>
+  </div>
+  <div class="explain-add">
+    <input type="text" id="explainTitle" placeholder="Title (e.g. The Déjà Vu Loop)" />
+    <input type="text" id="explainDesc" placeholder="Describe the inexplicable thing..." />
+    <button onclick="addExplain()">LOG IT</button>
+  </div>
+</section>
+
+<div class="divider" style="background: linear-gradient(90deg, transparent, var(--purple), transparent)"></div>
+
+<!-- CURSED QUOTE GENERATOR -->
+<section id="quotes">
+  <p class="section-label">Chapter 04</p>
+  <h2 class="section-title" style="color: var(--purple);">💬 CURSED QUOTE GENERATOR</h2>
+  <div class="quote-box">
+    <div class="quote-text" id="quoteText">Press the button. Receive wisdom.</div>
+    <div class="quote-source" id="quoteSource">— the void</div>
+  </div>
+  <br/>
+  <button class="quote-gen-btn" onclick="generateQuote()">GENERATE CURSED WISDOM 🔮</button>
+</section>
+
+<div class="divider" style="background: linear-gradient(90deg, transparent, var(--green), transparent)"></div>
+
+<!-- SPIN WHEEL -->
+<section id="wheel">
+  <p class="section-label">Chapter 05</p>
+  <h2 class="section-title" style="color: var(--green);">🎡 SPIN FOR LIFE ADVICE</h2>
+  <div class="wheel-wrapper">
+    <div class="wheel-container">
+      <div class="wheel-pointer">▼</div>
+      <canvas id="spinCanvas" width="320" height="320"></canvas>
+    </div>
+    <button class="spin-btn" id="spinBtn" onclick="spinWheel()">SPIN IT 🎰</button>
+    <div class="wheel-result" id="wheelResult">Your destiny awaits...</div>
+  </div>
+</section>
+
+<div class="divider" style="background: linear-gradient(90deg, transparent, var(--red), transparent)"></div>
+
+<!-- VILLAIN ARC -->
+<section id="villain">
+  <p class="section-label">Chapter 06</p>
+  <h2 class="section-title" style="color: var(--red);">😈 THE VILLAIN ARC TRACKER</h2>
+  <div class="villain-timeline" id="villainTimeline">
+    <div class="villain-entry">
+      <div class="v-date">Day 1 of the arc</div>
+      <h3>Food betrayal</h3>
+      <p>I left my food for sometime and when i returned it was gone and i was hungry. I was so tempted to unalive the person.</p>
+      <button class="delete-btn" onclick="this.closest('.villain-entry').remove()" style="display:block;margin-top:0.5rem;">✕ purge this entry</button>
+    </div>
+    <div class="villain-entry">
+      <div class="v-date">The great reckoning</div>
+      <h3>The Interruption Incident</h3>
+      <p>I was talking and someone kept interrupting me. I wanted to send that person to jesus.</p>
+      <button class="delete-btn" onclick="this.closest('.villain-entry').remove()" style="display:block;margin-top:0.5rem;">✕ purge this entry</button>
+    </div>
+  </div>
+  <div class="villain-add">
+    <input type="text" id="villainTitle" placeholder="Name of the arc moment..." />
+    <textarea id="villainDesc" rows="2" placeholder="Describe your descent into chaos..."></textarea>
+    <button onclick="addVillainEntry()">LOG ARC MOMENT 😈</button>
+  </div>
+</section>
+
+<div class="divider" style="background: linear-gradient(90deg, transparent, #ff8800, transparent)"></div>
+
+<!-- W/L BOARD -->
+<section id="wl">
+  <p class="section-label">Chapter 07</p>
+  <h2 class="section-title" style="color: #ff8800;">📊 THE W/L BOARD</h2>
+
+  <div class="score-bar">
+    <div class="score-fill-w" id="scoreBar" style="width: 50%"></div>
+  </div>
+  <div class="score-labels">
+    <span id="wScore">Ws: 3</span>
+    <span id="lScore">Ls: 3</span>
+  </div>
+
+  <div class="wl-grid">
+    <div class="w-col">
+      <h3>🏆 WINS</h3>
+      <div id="wList">
+        <div class="wl-item w-item"><span>✅</span><span>Taken up 'Getting rejected thousand times' seriously and now i am lil more confident.</span><button class="delete-btn" onclick="this.closest('.wl-item').remove();wCount--;updateScore()">✕</button></div>
+        <div class="wl-item w-item"><span>✅</span><span>Used my intuition to get the right answer. It was right..</span><button class="delete-btn" onclick="this.closest('.wl-item').remove();wCount--;updateScore()">✕</button></div>
+        <div class="wl-item w-item"><span>✅</span><span>Read a book, cried very much, read the other parts of the book too.</span><button class="delete-btn" onclick="this.closest('.wl-item').remove();wCount--;updateScore()">✕</button></div>
+      </div>
+      <div class="wl-add w-add">
+        <input type="text" id="wInput" placeholder="Log a W..." />
+        <button onclick="addW()">+W</button>
+      </div>
+    </div>
+    <div class="l-col">
+      <h3>💀 LOSSES</h3>
+      <div id="lList">
+        <div class="wl-item l-item"><span>❌</span><span>Waved back at someone who was waving at the person behind me.</span><button class="delete-btn" onclick="this.closest('.wl-item').remove();lCount--;updateScore()">✕</button></div>
+        <div class="wl-item l-item"><span>❌</span><span>Trying to enter the metro non-chalantly, and failed to catch it.</span><button class="delete-btn" onclick="this.closest('.wl-item').remove();lCount--;updateScore()">✕</button></div>
+        <div class="wl-item l-item"><span>❌</span><span>I tried to get a seat in bgarden bus, but i fell cs of the break.</span><button class="delete-btn" onclick="this.closest('.wl-item').remove();lCount--;updateScore()">✕</button></div>
+      </div>
+      <div class="wl-add l-add">
+        <input type="text" id="lInput" placeholder="Log an L..." />
+        <button onclick="addL()">+L</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="background: linear-gradient(90deg, transparent, #ff66cc, transparent)"></div>
+
+<!-- MEME PICTURE WALL -->
+<div class="divider" style="background: linear-gradient(90deg, transparent, #ff66cc, transparent)"></div>
+<section id="memepics">
+  <p class="section-label">Chapter 09</p>
+  <h2 class="section-title" style="color: #ff66cc;">🖼️ THE MEME VAULT</h2>
+  <p style="font-size:0.78rem; color:#666; margin-bottom: 2rem; margin-top: -2rem;">Upload and keep your sacred images here forever</p>
+
+  <div class="meme-upload-zone" onclick="document.getElementById('memeFileInput').click()">
+    <input type="file" id="memeFileInput" accept="image/*" multiple onchange="handleMemeUpload(event)" />
+    <label class="meme-upload-label">
+      <span class="upload-icon">🗂️</span>
+      <span style="font-family:'Permanent Marker',cursive; font-size:1.2rem; color:#ff66cc;">Drop your memes here</span>
+      <span class="upload-hint">PNG, JPG, GIF, WEBP — all formats welcome in the shrine</span>
+      <span class="upload-cta">+ UPLOAD MEMES</span>
+    </label>
+  </div>
+
+  <div class="meme-pics-grid" id="memePicsGrid">
+    <div style="border: 2px dashed #333; aspect-ratio:1; display:flex; align-items:center; justify-content:center; color:#333; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; text-align:center; padding:1rem;">
+      Your memes will<br/>appear here 👻
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="divider"></div>
+<footer>
+  <h2>MY BRAIN.EXE — STILL RUNNING</h2>
+  <p>Error 404: Sanity Not Found • Built in the trenches • No gods, no rules, just vibes</p>
+</footer>
+
+<script>
+  // ===== MEME ERAS =====
+  function addEra() {
+    const name = prompt("Name your era:");
+    if (!name) return;
+    const years = prompt("Years? (e.g. 2019–2022)") || "???";
+    const desc = prompt("Describe it in one cursed sentence:") || "...";
+    const card = document.createElement('div');
+    card.className = 'era-card';
+    card.innerHTML = `<span class="era-year">?</span><h3>${name}</h3><p>${desc}</p><span class="era-tag">${years}</span><button class="delete-btn" onclick="this.closest('.era-card').remove()" title="Delete">✕</button>`;
+    document.getElementById('erasGrid').appendChild(card);
+  }
+
+  // ===== HOT TAKES =====
+  let takeCount = 3;
+  function addTake() {
+    const val = document.getElementById('newTakeInput').value.trim();
+    if (!val) return;
+    takeCount++;
+    const heats = ['🌶️', '🌶️🌶️', '🌶️🌶️🌶️', '🌶️🌶️🌶️🌶️', '🌶️🌶️🌶️🌶️🌶️'];
+    const heat = heats[Math.floor(Math.random() * heats.length)];
+    const div = document.createElement('div');
+    div.className = 'take-item';
+    div.style.borderLeftColor = 'var(--red)';
+    div.innerHTML = `<span class="take-number">${String(takeCount).padStart(2,'0')}</span><span class="take-text">${val}</span><span class="take-heat">${heat}</span><button class="delete-btn" onclick="this.closest('.take-item').remove()">✕</button>`;
+    document.getElementById('takesList').appendChild(div);
+    document.getElementById('newTakeInput').value = '';
+  }
+  document.getElementById('newTakeInput').addEventListener('keydown', e => { if (e.key === 'Enter') addTake(); });
+
+  // ===== CANNOT EXPLAIN =====
+  function addExplain() {
+    const title = document.getElementById('explainTitle').value.trim();
+    const desc = document.getElementById('explainDesc').value.trim();
+    if (!title || !desc) return;
+    const icons = ['🌀','👁️','❓','🧠','⚡','🔮','🪐','🌙'];
+    const icon = icons[Math.floor(Math.random() * icons.length)];
+    const card = document.createElement('div');
+    card.className = 'explain-card';
+    card.innerHTML = `<div class="explain-icon">${icon}</div><h3>${title}</h3><p>${desc}</p><button class="delete-btn" onclick="this.closest('.explain-card').remove()" style="display:block;margin-top:0.5rem;">✕ remove</button>`;
+    const grid = document.getElementById('explainGrid');
+    grid.insertBefore(card, grid.lastElementChild);
+    document.getElementById('explainTitle').value = '';
+    document.getElementById('explainDesc').value = '';
+  }
+
+  // ===== CURSED QUOTES =====
+  const quotes = [
+    { text: "Unhappy? Then just laugh.", src: "— Sushi" },
+    { text: "Why try, just give up.", src: "— Sushi" },
+    { text: "Larry is behind you and will find you.", src: "— Sushi" },
+    { text: "Safar karte-karte suffer karenge.", src: "— Sushi" },
+    { text: "Always prefer verbal tea over herbal.", src: "— Sushi" },
+    { text: "Life is hard but aleast you are not 6 feet under the ground.", src: "— Sushi" },
+    { text: "You have 2 choices in this college. Pass out or Pass away.", src: "— meee" },
+    { text: "If you can dream it, you can do it. If you can't sleep, please stop dreaming about spreadsheets.", src: "— Walt Disney, probably exhausted" },
+    { text: "Work hard in silence. Let success make the noise. Let your enemies make the playlist.", src: "— a very specific enemy" },
+    { text: "Do what you love and you'll never work a day in your life. Unless you love working, in which case, good luck with that.", src: "— LinkedIn's worst nightmare" },
+    { text: "Stars can't shine without darkness. But they also can't shine when it's cloudy, so maybe just buy a lamp.", src: "— an electrician" },
+  ];
+  function generateQuote() {
+    const q = quotes[Math.floor(Math.random() * quotes.length)];
+    const el = document.getElementById('quoteText');
+    const src = document.getElementById('quoteSource');
+    el.style.opacity = 0;
+    setTimeout(() => { el.textContent = q.text; src.textContent = q.src; el.style.opacity = 1; }, 300);
+  }
+
+  // ===== SPIN WHEEL =====
+  const advices = [
+    "Drink water. Not as a metaphor. Actual water.",
+    "Text them back. You've been 'thinking about it' for 9 days.",
+    "Sleep first. Panic after.",
+    "Apologise for nothing. Except that one thing. You know what you did.",
+    "Make the playlist. Don't listen to it. Just make it.",
+    "Touch grass. Briefly. Then return indoors.",
+    "Today is not the day to be rational.",
+    "Order the weird thing on the menu. This is personal growth.",
+    "Send the meme. And then rant about it.",
+    "Start the thing. Don't finish it. Progress, baby.",
+  ];
+  const colors = ['#FFE000','#FF2D2D','#00FF88','#00CFFF','#C850FF','#FF8800','#FF66CC','#FFFFFF','#FFE000','#00FF88'];
+  const canvas = document.getElementById('spinCanvas');
+  const ctx = canvas.getContext('2d');
+  let isSpinning = false;
+  let currentAngle = 0;
+
+  function drawWheel(angle) {
+    const cx = canvas.width / 2, cy = canvas.height / 2, r = cx - 10;
+    const slice = (2 * Math.PI) / advices.length;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    advices.forEach((a, i) => {
+      const start = angle + i * slice, end = start + slice;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, r, start, end);
+      ctx.closePath();
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fill();
+      ctx.strokeStyle = '#0a0a0a';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(start + slice / 2);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#000';
+      ctx.font = 'bold 10px Space Mono';
+      const words = a.split(' ').slice(0,3).join(' ') + '...';
+      ctx.fillText(words, r - 12, 4);
+      ctx.restore();
+    });
+    ctx.beginPath();
+    ctx.arc(cx, cy, 18, 0, 2 * Math.PI);
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fill();
+    ctx.strokeStyle = '#FFE000';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  drawWheel(0);
+
+  function spinWheel() {
+    if (isSpinning) return;
+    isSpinning = true;
+    document.getElementById('spinBtn').disabled = true;
+    document.getElementById('wheelResult').textContent = 'Consulting the fates...';
+    const totalRotation = (Math.random() * 6 + 8) * Math.PI * 2;
+    const duration = 4000;
+    const start = performance.now();
+    const startAngle = currentAngle;
+    function animate(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 4);
+      currentAngle = startAngle + totalRotation * ease;
+      drawWheel(currentAngle);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        isSpinning = false;
+        document.getElementById('spinBtn').disabled = false;
+        const slice = (2 * Math.PI) / advices.length;
+        const normalized = (((-currentAngle % (2 * Math.PI)) + (2 * Math.PI)) % (2 * Math.PI));
+        const idx = Math.floor(normalized / slice) % advices.length;
+        document.getElementById('wheelResult').textContent = '🎯 ' + advices[idx];
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+
+  // ===== VILLAIN ARC =====
+  const days = ['Day of reckoning', 'The descent', 'Arc moment', 'The incident', 'Chapter of chaos'];
+  function addVillainEntry() {
+    const title = document.getElementById('villainTitle').value.trim();
+    const desc = document.getElementById('villainDesc').value.trim();
+    if (!title) return;
+    const day = days[Math.floor(Math.random() * days.length)];
+    const entry = document.createElement('div');
+    entry.className = 'villain-entry';
+    entry.innerHTML = `<div class="v-date">${day}</div><h3>${title}</h3><p>${desc || 'The details are classified.'}</p><button class="delete-btn" onclick="this.closest('.villain-entry').remove()" style="display:block;margin-top:0.5rem;">✕ purge this entry</button>`;
+    const timeline = document.getElementById('villainTimeline');
+    timeline.insertBefore(entry, timeline.firstChild);
+    document.getElementById('villainTitle').value = '';
+    document.getElementById('villainDesc').value = '';
+  }
+
+  // ===== W/L BOARD =====
+  let wCount = 3, lCount = 3;
+  function updateScore() {
+    document.getElementById('wScore').textContent = `Ws: ${wCount}`;
+    document.getElementById('lScore').textContent = `Ls: ${lCount}`;
+    const total = wCount + lCount;
+    const pct = total > 0 ? (wCount / total) * 100 : 50;
+    document.getElementById('scoreBar').style.width = pct + '%';
+  }
+  function addW() {
+    const val = document.getElementById('wInput').value.trim();
+    if (!val) return;
+    wCount++;
+    const div = document.createElement('div');
+    div.className = 'wl-item w-item';
+    div.innerHTML = `<span>✅</span><span>${val}</span><button class="delete-btn" onclick="this.closest('.wl-item').remove();wCount--;updateScore()">✕</button>`;
+    document.getElementById('wList').appendChild(div);
+    document.getElementById('wInput').value = '';
+    updateScore();
+  }
+  function addL() {
+    const val = document.getElementById('lInput').value.trim();
+    if (!val) return;
+    lCount++;
+    const div = document.createElement('div');
+    div.className = 'wl-item l-item';
+    div.innerHTML = `<span>❌</span><span>${val}</span><button class="delete-btn" onclick="this.closest('.wl-item').remove();lCount--;updateScore()">✕</button>`;
+    document.getElementById('lList').appendChild(div);
+    document.getElementById('lInput').value = '';
+    updateScore();
+  }
+  document.getElementById('wInput').addEventListener('keydown', e => { if (e.key === 'Enter') addW(); });
+  document.getElementById('lInput').addEventListener('keydown', e => { if (e.key === 'Enter') addL(); });
+
+  // ===== MEME PICTURE UPLOAD =====
+  function handleMemeUpload(event) {
+    const files = Array.from(event.target.files);
+    const grid = document.getElementById('memePicsGrid');
+    // Remove placeholder if present
+    const placeholder = grid.querySelector('div[style]');
+    if (placeholder) placeholder.remove();
+
+    files.forEach(file => {
+      if (!file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const card = document.createElement('div');
+        card.className = 'meme-pic-card';
+        card.innerHTML = `
+          <img src="${e.target.result}" alt="${file.name}" />
+          <div class="meme-pic-label">${file.name}</div>
+          <button class="meme-pic-delete" onclick="this.closest('.meme-pic-card').remove()">✕</button>
+        `;
+        grid.appendChild(card);
+      };
+      reader.readAsDataURL(file);
+    });
+    // Reset input so same file can be re-uploaded
+    event.target.value = '';
+  }
+
+  // Allow drag & drop onto upload zone
+  const uploadZone = document.querySelector('.meme-upload-zone');
+  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.style.borderColor = '#ff66cc'; });
+  uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = '#ff66cc44'; });
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadZone.style.borderColor = '#ff66cc44';
+    const dt = e.dataTransfer;
+    if (dt.files.length) handleMemeUpload({ target: { files: dt.files, value: '' } });
+  });
+</script>
+</body>
+</html>
